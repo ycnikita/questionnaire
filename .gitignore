@@ -13,9 +13,6 @@ bower_components
 # npm模块安装目录
 node_modules
 
-logs
-
-run
 
 # npm报错日志
 npm-debug.log

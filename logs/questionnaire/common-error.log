@@ -1,0 +1,120 @@
+2018-02-15 02:57:59,794 ERROR 25666 [-/127.0.0.1/-/5ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 25666
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 02:59:57,415 ERROR 25684 [-/127.0.0.1/-/5ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 25684
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 02:59:58,161 ERROR 25684 [-/127.0.0.1/-/1ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 25684
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 03:04:03,906 ERROR 25758 [-/127.0.0.1/-/5ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 25758
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 03:05:53,402 ERROR 25834 [-/127.0.0.1/-/5ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/dcwj调查问卷/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 25834
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 03:08:45,583 ERROR 25965 [-/127.0.0.1/-/4ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/questionair/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/questionair/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/questionair/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 25965
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 03:09:05,945 ERROR 26010 [-/127.0.0.1/-/4ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/questionair/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/questionair/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/questionair/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 26010
+hostname: qisendeMacBook-Pro.local
+
+2018-02-15 03:10:01,421 ERROR 26066 [-/127.0.0.1/-/4ms GET /] nodejs.Error: Please set config.keys first
+    at Application.get keys [as keys] (/Users/chirsen/myGitHub/questionair/node_modules/_egg@2.3.0@egg/lib/application.js:246:15)
+    at Object.get cookies [as cookies] (/Users/chirsen/myGitHub/questionair/node_modules/_egg@2.3.0@egg/app/extend/context.js:18:66)
+    at Object.get [egg-security#CSRF_SECRET] (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:77:33)
+    at Object.ensureCsrfSecret (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/app/extend/context.js:88:13)
+    at csrf (/Users/chirsen/myGitHub/questionair/node_modules/_egg-security@2.0.0@egg-security/lib/middlewares/csrf.js:14:9)
+    at dispatch (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at /Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:34:12
+    at dispatch (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:42:32)
+    at next (/Users/chirsen/myGitHub/questionair/node_modules/_koa-compose@4.0.0@koa-compose/index.js:43:18)
+    at session (/Users/chirsen/myGitHub/questionair/node_modules/_koa-session@5.8.1@koa-session/index.js:41:13)
+
+pid: 26066
+hostname: qisendeMacBook-Pro.local
+

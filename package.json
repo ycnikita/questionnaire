@@ -1,0 +1,13 @@
+{
+  "name": "questionnaire",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "egg-bin dev"
+  },
+  "dependencies": {
+    "egg": "^2.3.0"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.3.7"
+  }
+}

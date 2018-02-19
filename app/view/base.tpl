@@ -257,10 +257,10 @@
 				</h1>
 				<ol class="breadcrumb">
 					<li>
-						<a href="#">首页</a>
+						<a href="/">首页</a>
 					</li>
 					<li>
-						<a href="#">{% block location %}{% endblock %}</a>
+						<a href="">{% block location %}{% endblock %}</a>
 					</li>
 				</ol>
 

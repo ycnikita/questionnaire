@@ -5,7 +5,8 @@
     "dev": "egg-bin dev"
   },
   "dependencies": {
-    "egg": "^2.3.0"
+    "egg": "^2.3.0",
+    "egg-view-nunjucks": "^2.1.4"
   },
   "devDependencies": {
     "egg-bin": "^4.3.7"

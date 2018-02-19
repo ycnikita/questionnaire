@@ -1,4 +1,5 @@
 module.exports = (app) => {
 	const { router, controller } = app;
-	router.get('/', controller.home.index);
+	console.log(controller);
+	router.get('/', controller.index.page);
 };

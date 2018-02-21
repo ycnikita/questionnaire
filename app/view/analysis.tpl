@@ -1,4 +1,13 @@
 {% extends "base.tpl" %}
+{% block sideNav %}
+{{ macros.active('analysis') }}
+{% endblock %}
+{% block innerTitle %}
+问卷分析
+{% endblock %}
+{% block location %}
+问卷分析
+{% endblock %}
 {% block content %}
 <div class="dashboard-cards">
 	<div class="row">
@@ -297,12 +306,5 @@
 		<a href="http://www.mycodes.net/">WebThemez.com</a>
 	</p>
 
-
 </footer>
-{% endblock %}
-{% block sideNav %}
-{{ macros.active('analysis') }}
-{% endblock %}
-{% block location %}
-问卷分析
 {% endblock %}

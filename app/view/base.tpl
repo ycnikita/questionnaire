@@ -253,7 +253,7 @@
 		<div id="page-wrapper">
 			<div class="header">
 				<h1 class="page-header">
-					已发布问卷列表
+					{% block innerTitle %}{% endblock %}
 				</h1>
 				<ol class="breadcrumb">
 					<li>

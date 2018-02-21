@@ -11,8 +11,9 @@ class index extends Controller {
 	// 所有管理页面
 	async list() {
 		// 问卷列表页面
-		const data = {};
-		await this.ctx.render('list.tpl', {'name': data.name});
+		const data = await this.ctx.service.list.list();
+		console.log(data);
+		await this.ctx.render('list.tpl', {'list': data});
 	}
 	async edit() {
 		// 问卷编辑页面

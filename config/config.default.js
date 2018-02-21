@@ -7,6 +7,6 @@ exports.view = {
 		'.tpl': 'nunjucks',
 	},
 };
-// exports.mongo = {
-// 	client: dbconfig
-// };
+exports.mongo = {
+	client: dbconfig
+};

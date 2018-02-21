@@ -1,6 +1,8 @@
 {% extends "base.tpl" %}
 {% block content %}
-{{ name }}
+{% for item in list %}
+{{ item.name }}
+{% endfor %}
 {% endblock %}
 {% block sideNav %}
 {{ macros.active('list') }}

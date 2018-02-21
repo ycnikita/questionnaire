@@ -53,4 +53,4 @@ class API extends Controller {
 	}
 }
 
-module.exports = AP;
+module.exports = API;

@@ -1,10 +1,9 @@
-/* fallback */
 
 @font-face {
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;
-	src: url(../fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+	src: url(/public/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
 }
 
 .material-icons {

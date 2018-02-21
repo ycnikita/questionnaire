@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>广发问卷</title>
 
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="/public/css/font-icons.css" rel="stylesheet">
 	<link rel="stylesheet" href="/public/css/materialize.min.css" media="screen,projection"
 	/>
 	<!-- Bootstrap Styles-->
@@ -296,5 +296,6 @@
 
 	<!-- Custom Js -->
 	<script src="/public/js/custom-scripts.js"></script>
+	<script src="/public/js/custom-base.js"></script>
 
 </html>

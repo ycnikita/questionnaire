@@ -1,0 +1,70 @@
+/* 顶部的全局内容 */
+.top-header-wrap{
+	background: white;
+	color: #888;
+	width: 100%;
+}
+.top-header .header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.top-header .global{
+	display: flex;
+	justify-content: flex-end;
+	align-items: baseline;
+}
+.global .label{
+	display: flex;
+	align-items: center;
+	color: #555;
+}
+
+
+/* 预览的内容 */
+.iphone{
+	margin: 0 auto;
+    width: 364px;
+    height: 736px;
+    background: url(/public/images/iphone.png) no-repeat;
+    position: relative;
+}
+.iphone .iphone-box{
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	padding: 0 10px;
+    width: 322px;
+    height: 571px;
+    left: 21px;
+    top: 82px;
+	background-color: #fff;
+	overflow-y: auto;
+}
+
+/* 编辑选项的内容 */
+.edit-area{
+	margin-top: 80px;
+}
+.edit-area .types{
+	display: flex;
+}
+.edit-area .title-text{
+	margin-top: 10px;
+}
+.option-types-wrapper .option-types{
+	display: flex;
+	justify-content: flex-start;
+	color: white;
+}
+.options-wrap{
+	display: flex;
+	flex-direction: column;
+}
+.options-wrap .option-item{
+	display: flex;
+	align-items: center;
+}
+.option-item .to-down{
+	transform: rotate(180deg);
+}

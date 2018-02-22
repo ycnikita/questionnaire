@@ -35,6 +35,11 @@ class index extends Controller {
 		const data = {};
 		await this.ctx.render('table.tpl', data);
 	}
+	async test() {
+		// 问卷报表生成页面
+		const data = {};
+		await this.ctx.render('a.html', data);
+	}
 }
 
 module.exports = index;

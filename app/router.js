@@ -22,4 +22,7 @@ module.exports = (app) => {
 	router.get('/api/doneList', controller.api.getDoneList);
 	router.get('/api/doingList', controller.api.getDoingList);
 	router.get('/api/curScore	', controller.api.curScore);
+
+	// 测试页面
+	router.get('/test', controller.index.test);
 };

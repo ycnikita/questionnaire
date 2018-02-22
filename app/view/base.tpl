@@ -19,6 +19,7 @@
 	<link href="/public/css/custom-styles.css" rel="stylesheet" />
 
 	<link rel="stylesheet" href="/public/css/cssCharts.css">
+	{% block links %}{% endblock %}
 </head>
 
 <body>
@@ -297,5 +298,7 @@
 	<!-- Custom Js -->
 	<script src="/public/js/custom-scripts.js"></script>
 	<script src="/public/js/custom-base.js"></script>
+	{% block scripts %}{% endblock %}
+
 
 </html>

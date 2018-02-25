@@ -23,9 +23,8 @@
 
 	// 记录填写内容，用于上传数据库
 	var data = {
-		title: '',
-		des: '',
-		prograph: [],
+		title: '空标题',
+		des: '空描述',
 		topics: []
 	};
 
@@ -45,7 +44,7 @@
 				var order = $(this).attr('data-order');
 				if(+order === choosenOrder) return;
 				_this.initState();
-				_this.changeNumber('choose', $(this));
+				_this.changeNumber('choose', order, type);
 				_this.startEdit(type);
 				_this.choosenTopic($(this));
 			});
@@ -67,17 +66,21 @@
 			$topicInput.on('input', function(e) {
 				var text = e.target.value;
 				if(editingType === 'title' || editingType === 'des'){
-					data.title = text;
+					data[editingType] = text;
 					$iphone.find(`.pre-${editingType}`).html(text);
 				} else {
-					data.prograph.push({index: curOrder, content: text});
+					if (data.topics[choosenOrder]) {
+						data.topics[choosenOrder].content = text;
+					}
 					$iphone.find(`.pre-wrapper[data-order="${choosenOrder}"]`).find('.title-content').html(text);
 				}
+				_this.changeData('changeValue', 'title', text, choosenOrder);
 			});
 
 			// 点击添加选项按钮
 			$addItem.on('click', function(e){
 				_this.addItem(`选项${curItemOrder + 2}`, editingType, curItemOrder + 1);
+				_this.changeData('add', 'item', `选项${curItemOrder + 2}`, curItemOrder + 1);
 			});
 
 			// 选项输入框内容变化
@@ -85,12 +88,13 @@
 				var optionIndex = $(e.target).attr('data-order');
 				var order = $('.pre-choosen').attr('data-order');
 				var text = $(e.target).val();
-				$('.pre-choosen').find(`input[id="${order}_${optionIndex}"]`).next('span').text(text);
+				_this.changeData('changeValue', 'item', text, optionIndex);
+				$('.pre-choosen').find(`input[id="${order}_${optionIndex}"]`).nextAll('span').text(text);
 			});
 
 			// 点击位置上下调换按钮
 			$('.options-wrap').on('click', '.to-up', function(e) {
-				console.log('aaa');
+				_this.changeData('moveUp', 'item', undefined, 1);
 			});
 			$('.options-wrap').on('click', '.to-down', function(e) {
 
@@ -152,30 +156,35 @@
 		},
 		// 预览中添加组件
 		addComponents: function(type) {
-			var ele = '';
 			if(type === 'title' || type === 'des') {
 				return false;
 			}
 			$('.pre-wrapper').removeClass('pre-choosen');
 			// 根据类型不同，添加不同的组件
 			if(type === 'prograph') {
-				ele = $iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="prograph"><p class="title-content">一段描述段落</p></div>`);
+				$iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="prograph"><p class="title-content">一段描述段落</p></div>`);
 				$topicInput.val('一段描述段落');
-			} else if (type === 'radio') {
+				this.changeData('add', 'title', '一段描述段落', curOrder);
+			} else if (type === 'radio' || type === 'checkbox') {
 				curItemOrder = 1;
-				ele = $iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="radio"><div class="order">${curTopicOrder+1}. </div><p class="title-content">标题</p>
+				$iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="${type}"><div class="order">${curTopicOrder+1}. </div><p class="title-content">标题</p>
 				<ul>
-					<li><label for="${curTopicOrder}_0"><input type="radio" name="${curTopicOrder}" id="${curTopicOrder}_0" value="0"><span>选项1</span><i class="circle"></i></label></li>
-					<li><label for="${curTopicOrder}_1"><input type="radio" name="${curTopicOrder}" id="${curTopicOrder}_1" value="1"><span>选项2</span><i class="circle"></i></label></li>
+					<li><label for="${curTopicOrder}_0"><input type="${type}" name="${curTopicOrder}" id="${curTopicOrder}_0" value="0"><i class="${type === 'radio'? 'circle' : 'rect' }"></i><span>选项1</span></label></li>
+					<li><label for="${curTopicOrder}_1"><input type="radio" name="${curTopicOrder}" id="${curTopicOrder}_1" value="1"><i class="${type === 'radio'? 'circle' : 'rect' }"></i><span>选项2</span></label></li>
 				</ul>
 				</div>`);
 				$topicInput.val('标题');
+				this.changeData('add', 'title', '标题', curOrder);
+				this.changeData('add', 'item', '选项1', 0);
+				this.changeData('add', 'item', '选项2', 1);
+			} else if (type === 'text') {
+				$iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="${type}"><div class="order">${curTopicOrder+1}. </div><p class="title-content">标题</p>
+					<textarea row="5" name="${curTopicOrder}" class="topic-text" id="${curTopicOrder}"></textarea>
+				</div>`);
+				$topicInput.val('题目描述');
+				this.changeData('add', 'title', '题目描述', curOrder);
 			}
-			this.changeNumber('add', ele);
-		},
-		// 数据操作
-		optionData: function() {
-			
+			this.changeNumber('add', curOrder, type);
 		},
 		// 点击选中某个预览中的组件
 		choosenTopic: function(ele) {
@@ -206,11 +215,9 @@
 			!(ele.hasClass('pre-choosen')) && ele.addClass('pre-choosen');
 		}, 
 		// 更改一系列的编号（编号来源为选中的元素）
-		changeNumber: function(changeType, ele) {
-			var order = ele.attr('data-order'),
-				type = ele.attr('data-type');
-				choosenOrder = order;
-				editingType = type;
+		changeNumber: function(changeType, order, type) {
+			choosenOrder = order;
+			editingType = type;
 			if (changeType === 'add') {
 				curTopicOrder += 1;
 				curOrder += 1;
@@ -224,15 +231,51 @@
 								<i class="material-icons dp48 to-down">present_to_all</i>
 							</li>`,
 				itemPre = `<li><label for="${curTopicOrder - 1}_${itemOrder}">
-								<input type="radio" name="${curTopicOrder - 1}" id="${curTopicOrder - 1}_${itemOrder}" value="${itemOrder}">
+								<input type="${type}" name="${curTopicOrder - 1}" id="${curTopicOrder - 1}_${itemOrder}" value="${itemOrder}">
+								<i class="${type === 'radio' ? 'circle' : 'rect'}"></i>
 								<span>${text || `选项${itemOrder+1}`}</span>
-								<i class="circle"></i>
 							</label></li>`;
 			$('.options-wrap').append(itemEdit);
 			curItemOrder += 1;
 			if (topicOrder === undefined) {
 				$('.pre-choosen').find('ul').append(itemPre);
 			}
+		},
+		// 根据数据的更改，刷新视图
+		updataView: function() {
+
+		},
+		// 每次更新数据(optionType: moveUp | moveDown | delete | changeValue | add, type: title | item)
+		changeData: function(optionType, type, value, index) {
+			if (type === 'item' && data.topics[choosenOrder].items === undefined) {
+				data.topics[choosenOrder].items = [];
+			}
+			var arr = type === 'title' ? data.topics : data.topics[choosenOrder].items;
+			if (optionType === 'moveUp') {
+				if (index === 0) return;
+				// 交换
+				var temp = data.topics[choosenOrder].items[index];
+				data.topics[index] = data.topics[index - 1];
+				data.topics[index - 1] = temp;
+			} else if (optionType === 'moveDown') {
+				var len = arr.length;
+				if(index === len - 1) return;
+				// 交换
+				var temp = data.topics[choosenOrder].items[index];
+				data.topics[index] = data.topics[index + 1];
+				data.topics[index + 1] = temp;
+			} else if (optionType === 'delete') {
+				arr.splice(index, 1);
+			} else if (optionType === 'changeValue'){
+				if(editingType === 'title' || editingType === 'des'){
+					data[editingType] = value;
+					return;
+				}
+				arr[index].content = value;
+			} else {
+				arr.push({content: value});
+			}
+			console.log(data);
 		}
 		
 	};

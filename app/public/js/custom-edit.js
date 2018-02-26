@@ -49,8 +49,14 @@
 				_this.choosenTopic($(this));
 			});
 			// 监听对各个题目的操作下拉的内容
-			$('topic_options').on('click', function() {
-
+			$('#topic_options').on('click', function(e) {
+				var type = $(e.target).attr('data-type');
+				if(type === 'delete') {
+					_this.changeNumber('delete');
+				}
+				_this.changeData(type, 'title', '', choosenOrder);
+				// 更新视图
+				_this.updataView();
 			})
 			// 监听题目类型下拉的内容
 			$topicTypes.on('click', 'li', function(e){
@@ -64,6 +70,10 @@
 
 			// 文本区标题内容的变化，反应到预览区
 			$topicInput.on('input', function(e) {
+				if (choosenOrder === undefined || editingType === undefined) {
+					alert('请新建或选择一个编辑对象～');
+					return;
+				}
 				var text = e.target.value;
 				if(editingType === 'title' || editingType === 'des'){
 					data[editingType] = text;
@@ -79,12 +89,20 @@
 
 			// 点击添加选项按钮
 			$addItem.on('click', function(e){
+				if (choosenOrder === undefined || editingType === undefined) {
+					alert('请新建或选择一个编辑对象～');
+					return;
+				}
 				_this.addItem(`选项${curItemOrder + 2}`, editingType, curItemOrder + 1);
 				_this.changeData('add', 'item', `选项${curItemOrder + 2}`, curItemOrder + 1);
 			});
 
 			// 选项输入框内容变化
 			$('.options-wrap').on('input', '.option', function(e) {
+				if (choosenOrder === undefined || editingType === undefined) {
+					alert('请新建或选择一个编辑对象～');
+					return;
+				}
 				var optionIndex = $(e.target).attr('data-order');
 				var order = $('.pre-choosen').attr('data-order');
 				var text = $(e.target).val();
@@ -94,10 +112,20 @@
 
 			// 点击位置上下调换按钮
 			$('.options-wrap').on('click', '.to-up', function(e) {
-				_this.changeData('moveUp', 'item', undefined, 1);
+				if (choosenOrder === undefined || editingType === undefined) {
+					alert('请新建或选择一个编辑对象～');
+					return;
+				}
+				var index = $(e.target).parent().find('input').attr('data-order');
+				_this.changeData('moveUp', 'item', undefined, index);
 			});
 			$('.options-wrap').on('click', '.to-down', function(e) {
-
+				if (choosenOrder === undefined || editingType === undefined) {
+					alert('请新建或选择一个编辑对象～');
+					return;
+				}
+				var index = $(e.target).parent().find('input').attr('data-order');
+				_this.changeData('moveDown', 'item', undefined, index);
 			});
 
 			// 点击完成按钮
@@ -216,11 +244,22 @@
 		}, 
 		// 更改一系列的编号（编号来源为选中的元素）
 		changeNumber: function(changeType, order, type) {
+			if (changeType === 'delete') {
+				choosenOrder = undefined;
+				editingType = undefined;
+				if (type !== 'prograph') curTopicOrder -= 1;
+				curOrder -= 1;
+				return;
+			}
 			choosenOrder = order;
 			editingType = type;
 			if (changeType === 'add') {
-				curTopicOrder += 1;
+				if (type !== 'prograph') curTopicOrder += 1;
 				curOrder += 1;
+			}
+			if (changeType === 'delete') {
+				if (type !== 'prograph') curTopicOrder -= 1;
+				curOrder -= 1;
 			}
 		},
 		// 添加一个选项到编辑区（如果没有传值，同时也添加到预览区）
@@ -243,28 +282,56 @@
 		},
 		// 根据数据的更改，刷新视图
 		updataView: function() {
-
+			// 便利data，更改dom结构
+			var vDom = '';
+			var topicIndex = 0;
+			vDom += `<div class="pre-wrapper" data-type="title"><h1 class="pre-title title-content">${data.title}</h1></div>`;
+			vDom += `<div class="pre-wrapper" data-type="des"><p class="pre-des title-content">${data.des}</p></div>`;
+			// 题目和段落
+			data.topics.map(function(item, index){
+				var type = item.type;
+				if(type === 'prograph') {
+					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="prograph"><p class="title-content">${item.content}</p></div>`
+				} else if (type === 'radio' || type === 'checkbox') {
+					++topicIndex;
+					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="${type}"><div class="order">${topicIndex+1}. </div><p class="title-content">${item.content}</p>
+					<ul>`;
+					for (let i = 0; i < item.items.length; i++) {
+						vDom += `<li><label for="${topicIndex}_${i}"><input type="${type}" name="${topicIndex}" id="${topicIndex}_0" value="0"><i class="${type === 'radio'? 'circle' : 'rect' }"></i><span>${item.items[i].content}</span></label></li>`;
+					}
+					vDom += '</ul></div>';
+				} else if (type === 'text') {
+					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="${type}"><div class="order">${topicIndex+1}. </div><p class="title-content">${item.content}</p>
+					<textarea row="5" name="${topicIndex}" class="topic-text" id="${topicIndex}"></textarea>
+				</div>`;
+				}
+				
+			});
+			$iphone.find('.pre-wrapper').remove();
+			$iphone.append(vDom);
 		},
 		// 每次更新数据(optionType: moveUp | moveDown | delete | changeValue | add, type: title | item)
 		changeData: function(optionType, type, value, index) {
-			if (type === 'item' && data.topics[choosenOrder].items === undefined) {
-				data.topics[choosenOrder].items = [];
+			let curTopicIndex = choosenOrder;
+			if(!choosenOrder) curTopicIndex = curOrder;
+			if (type === 'item' && data.topics[curTopicIndex].items === undefined) {
+				data.topics[curTopicIndex].items = [];
 			}
-			var arr = type === 'title' ? data.topics : data.topics[choosenOrder].items;
+			var arr = type === 'title' ? data.topics : data.topics[curTopicIndex].items;
 			if (optionType === 'moveUp') {
 				if (index === 0) return;
 				// 交换
-				var temp = data.topics[choosenOrder].items[index];
+				var temp = data.topics[curTopicIndex].items[index];
 				data.topics[index] = data.topics[index - 1];
 				data.topics[index - 1] = temp;
 			} else if (optionType === 'moveDown') {
 				var len = arr.length;
 				if(index === len - 1) return;
 				// 交换
-				var temp = data.topics[choosenOrder].items[index];
+				var temp = data.topics[curTopicIndex].items[index];
 				data.topics[index] = data.topics[index + 1];
 				data.topics[index + 1] = temp;
-			} else if (optionType === 'delete') {
+			} else if (optionType === 'delete' && type === 'title') {
 				arr.splice(index, 1);
 			} else if (optionType === 'changeValue'){
 				if(editingType === 'title' || editingType === 'des'){
@@ -273,11 +340,14 @@
 				}
 				arr[index].content = value;
 			} else {
-				arr.push({content: value});
+				if(type === 'title') {
+					arr.push({content: value, type: editingType});
+				} else {
+					arr.push({content: value});
+				}
 			}
 			console.log(data);
 		}
-		
 	};
 
 	module.init();

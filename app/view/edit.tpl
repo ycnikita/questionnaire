@@ -60,8 +60,8 @@
 					<ul class="dropdown-menu" id="topic_options">
 						<li><a href="javascript:void(0);" data-type="moveUp">向上移动</a></li>
 						<li><a href="javascript:void(0);" data-type="moveDown">向下移动</a></li>
-						<li><a href="javascript:void(0);" data-type="insertUp">上方插入</a></li>
-						<li><a href="javascript:void(0);" data-type="insertDown">下方插入</a></li>
+						{# <li><a href="javascript:void(0);" data-type="insertUp">上方插入</a></li> #}
+						{# <li><a href="javascript:void(0);" data-type="insertDown">下方插入</a></li> #}
 						<li><a href="javascript:void(0);" data-type="delete">删除</a></li>
 					</ul>
 				</div>

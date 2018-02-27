@@ -7,6 +7,7 @@ module.exports = (app) => {
 	router.get('/control/table', controller.index.table);
 	router.get('/control/analysis', controller.index.analysis);
 	router.get('/control/expenses', controller.index.expenses);
+	router.post('/control/upload', controller.index.upload);
 	
 	// 用户请求api
 	router.post('/userinfo/registe', controller.user.register);

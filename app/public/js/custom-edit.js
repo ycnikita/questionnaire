@@ -70,7 +70,7 @@
 
 			// 文本区标题内容的变化，反应到预览区
 			$topicInput.on('input', function(e) {
-				if (choosenOrder === undefined || editingType === undefined) {
+				if ((choosenOrder === undefined && editingType !== 'title' && editingType !== 'des') || editingType === undefined) {
 					alert('请新建或选择一个编辑对象～');
 					return;
 				}
@@ -136,7 +136,36 @@
 
 			// 点击完成编辑按钮
 			$finished.on('click', function(e){
-
+				var cost = $cost.val();
+				var time = $time.val();
+				if(cost === '') {
+					alert('酬劳不能为空');
+					return;
+				}
+				if(time === '') {
+					alert('请注明耗费时间');
+					return;
+				}
+				data.cost = cost;
+				data.time = time;
+				var f = window.confirm("确定提交当前问卷？");
+				if(!f) return;
+				// 将信息提交
+				var crfToken = _this.getToken('csrfToken');
+				$.ajax({
+					url: '/control/upload?_csrf='+crfToken,
+					data: data,
+					type: 'post',
+					success: function(result) {
+						if(+result.code === 200) {
+							// 提交题目成功，跳转到已发布
+							alert('提交题目成功！');
+							window.location.href = '/control/list';
+						} else {
+							alert(result.des);
+						}
+					}
+				});
 			});
 		},
 		// 首先将编辑的相关按钮，输入等置为不可编辑状态
@@ -313,7 +342,7 @@
 		// 每次更新数据(optionType: moveUp | moveDown | delete | changeValue | add, type: title | item)
 		changeData: function(optionType, type, value, index) {
 			let curTopicIndex = choosenOrder;
-			if(!choosenOrder) curTopicIndex = curOrder;
+			if(choosenOrder === undefined) curTopicIndex = curOrder;
 			if (type === 'item' && data.topics[curTopicIndex].items === undefined) {
 				data.topics[curTopicIndex].items = [];
 			}
@@ -346,7 +375,19 @@
 					arr.push({content: value});
 				}
 			}
-			console.log(data);
+		},
+		// 获取crfToken
+		getToken: function() {
+			return this.getCookie('csrfToken');
+		},
+		// 获取cookie
+		getCookie: function(name) {
+			var cookies = document.cookie.split(';');
+			var matchCookie = cookies.filter(item => item.indexOf(`${name}=`) !== -1);
+			if (matchCookie.length !== 0) {
+				return matchCookie[0].split('=')[1];
+			}
+			return '';
 		}
 	};
 

@@ -300,5 +300,4 @@
 	<script src="/public/js/custom-base.js"></script>
 	{% block scripts %}{% endblock %}
 
-
 </html>

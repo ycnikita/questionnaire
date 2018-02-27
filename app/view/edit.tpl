@@ -9,11 +9,11 @@
 				<button class="finish btn btn-primary" id="finished">完成编辑</button>
 				<div class="global">
 					<label for="cost" class="label">
-						<span>预计酬劳: </span> 
+						<span class="text">预计酬劳: </span> 
 						<input type="text" class="cost" name="cost">
 					</label>
 					<label for="time" class="label">
-						<span>预计用时: </span> 
+						<span class="text">预计用时: </span> 
 						<input type="text" class="time" name="time">
 					</label>
 				</div>

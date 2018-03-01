@@ -15,7 +15,7 @@
 		<div class="col-md-4 col-sm-4">
 			<div class="card teal">
 				<div class="card-content white-text">
-					<span class="card-title">{{ item.title }}</span>
+					<span class="card-title" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title={{item.title}}>{{ item.title }}</span>
 					<p>{{ item.des }}</p>
 				</div>
 				<div class="card-action">

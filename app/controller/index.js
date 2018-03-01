@@ -16,8 +16,12 @@ class index extends Controller {
 	}
 	async edit() {
 		// 问卷编辑页面
-		const data = {};
-		await this.ctx.render('edit.tpl', data);
+		const query = this.ctx.query;
+		let data = {};
+		if(query.id) {
+			data = await this.ctx.service.index.getOnePage(query.id);
+		}
+		await this.ctx.render('edit.tpl', {data});
 	}
 	async analysis() {
 		// 问卷分析页面

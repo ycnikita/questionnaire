@@ -8,7 +8,21 @@ class Control extends Service {
 	// 存放用户上传的问卷
 	async save(data) {
 		try {
-			const result = await this.app.mongo.insertOne('qs', {doc: data});
+			let result = {};
+			if(data.id) {
+				result = await this.app.mongo.updateMany('qs', {doc: data});
+			} else {
+				result = await this.app.mongo.insertOne('qs', {doc: data});
+			}
+			return result;
+		} catch (e) {
+			console.log(e);
+		}
+	}
+	// 获取某个id下的调查问卷
+	async getOnePage(id) {
+		try {
+			const result = await this.app.mongo.find('qs', {_id: id});
 			return result;
 		} catch (e) {
 			console.log(e);

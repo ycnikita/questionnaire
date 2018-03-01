@@ -138,6 +138,7 @@
 			$finished.on('click', function(e){
 				var cost = $cost.val();
 				var time = $time.val();
+				var id = $(e.target).attr('data-id');
 				if(cost === '') {
 					alert('酬劳不能为空');
 					return;
@@ -148,6 +149,7 @@
 				}
 				data.cost = cost;
 				data.time = time;
+				data._id = id;
 				var f = window.confirm("确定提交当前问卷？");
 				if(!f) return;
 				// 将信息提交
@@ -393,4 +395,3 @@
 
 	module.init();
 })(jQuery);
-

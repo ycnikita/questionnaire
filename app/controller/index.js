@@ -12,7 +12,6 @@ class index extends Controller {
 	async list() {
 		// 问卷列表页面
 		const data = await this.ctx.service.index.list();
-		console.log(data);
 		await this.ctx.render('list.tpl', {'list': data});
 	}
 	async edit() {

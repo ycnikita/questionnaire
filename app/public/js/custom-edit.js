@@ -31,9 +31,32 @@
 	var module = {
 		init: function() {
 			// 初始化的执行流程
+			this.initPage();
 			this.initState();
 			this.initEvents();
 		},
+		// 初始化页面（获取数据并且重新绘制页面）
+		initPage: function() {
+			// 如果没有id信息，不进行消息获取
+			var _this = this;
+			var url = document.location.href;
+			var id = this.getQuery('id');
+			if(!id) return;
+			// 将信息提交
+			var crfToken = _this.getToken('csrfToken');
+			$.ajax({
+				url: '/api/paper?_csrf='+crfToken,
+				data: {id: id},
+				success: function(result) {
+					if(+result.code === 200) {
+						// 获取题目成功，替换内容
+						data = result.data;
+						_this.updataView();
+					}
+				}
+			});
+		},
+		// 给需要交互的元素添加交互事件
 		initEvents: function() {
 			// 根据选择的类型，添加不同的内容到手机展示区域，并且指定部分输入和输
 			var _this = this;
@@ -149,7 +172,10 @@
 				}
 				data.cost = cost;
 				data.time = time;
-				data._id = id;
+				if(id) {
+					data.id = id;
+				}
+				console.log(data);
 				var f = window.confirm("确定提交当前问卷？");
 				if(!f) return;
 				// 将信息提交
@@ -166,6 +192,9 @@
 						} else {
 							alert(result.des);
 						}
+					},
+					error: function() {
+						alert('上传数据失败，请稍后重试');
 					}
 				});
 			});
@@ -319,7 +348,7 @@
 			vDom += `<div class="pre-wrapper" data-type="title"><h1 class="pre-title title-content">${data.title}</h1></div>`;
 			vDom += `<div class="pre-wrapper" data-type="des"><p class="pre-des title-content">${data.des}</p></div>`;
 			// 题目和段落
-			data.topics.map(function(item, index){
+			data.topics && data.topics.map(function(item, index){
 				var type = item.type;
 				if(type === 'prograph') {
 					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="prograph"><p class="title-content">${item.content}</p></div>`
@@ -340,6 +369,13 @@
 			});
 			$iphone.find('.pre-wrapper').remove();
 			$iphone.append(vDom);
+			// 如果data有id，把id插入，并且更新耗时和花销
+			if(data._id) {
+				console.log(data);
+				$('#finished').attr('data-id', data._id);
+				$('#cost').val(data.cost);
+				$('#time').val(data.time);
+			}
 		},
 		// 每次更新数据(optionType: moveUp | moveDown | delete | changeValue | add, type: title | item)
 		changeData: function(optionType, type, value, index) {
@@ -390,6 +426,16 @@
 				return matchCookie[0].split('=')[1];
 			}
 			return '';
+		},
+		// 获取参数中某个值
+		getQuery: function(name) {
+			var search = document.location.search;
+			var params = [];
+			if(search) {
+				params = search.split(/\?|&/g);
+				return params.filter(item => item.indexOf(`${name}=`) !== -1)[0].split('=')[1];
+			}
+			return undefined;
 		}
 	};
 

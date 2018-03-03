@@ -9,7 +9,7 @@ module.exports = (app) => {
 	router.get('/control/expenses', controller.index.expenses);
 	router.post('/control/upload', controller.index.upload);
 	
-	// 用户请求api
+	// 用户请求api，注册，登陆，登出
 	router.post('/userinfo/registe', controller.user.register);
 	router.post('/userinfo/check', controller.user.checkCode);
 	router.post('/userinfo/login', controller.user.login);

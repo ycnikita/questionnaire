@@ -18,8 +18,10 @@ class API extends Controller {
 	 * 请求某个问卷的所有题目
 	 * @param {string} id 问卷的id
 	 */
-	async getOnePaper (id) {
-
+	async getOnePaper () {
+		const id = this.ctx.query.id;
+		const data = await this.ctx.service.index.getOnePage(id);
+		this.ctx.body = {code: 200, data};
 	}
 	/**
 	 * 上传答案

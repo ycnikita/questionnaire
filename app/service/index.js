@@ -1,4 +1,5 @@
 const Service = require('egg').Service;
+const ObjectId = require('mongodb').ObjectId;
 class Control extends Service {
 	// 读取某个用户生成的所有list（title， des， id）
 	async list(page = 1) {
@@ -9,8 +10,15 @@ class Control extends Service {
 	async save(data) {
 		try {
 			let result = {};
-			if(data.id) {
-				result = await this.app.mongo.updateMany('qs', {doc: data});
+			const id = data.id || data._id;
+			if(id) {
+				delete data._id;
+				result = await this.app.mongo.updateMany('qs', {
+					filter: {"_id": ObjectId(id)}, 
+					update: {
+						"$set": data
+					}
+				});
 			} else {
 				result = await this.app.mongo.insertOne('qs', {doc: data});
 			}
@@ -22,8 +30,8 @@ class Control extends Service {
 	// 获取某个id下的调查问卷
 	async getOnePage(id) {
 		try {
-			const result = await this.app.mongo.find('qs', {_id: id});
-			return result;
+			const result = await this.app.mongo.find('qs', {query: {"_id": ObjectId(id)}});
+			return result[0];
 		} catch (e) {
 			console.log(e);
 		}

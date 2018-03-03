@@ -6,7 +6,16 @@
 	<div class="row top-header-wrap">
 		<div class="top-header col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
 			<div class="header">
-				<button class="finish btn btn-primary" id="finished">完成编辑</button>
+				<div class="dropdown">
+					<a href="" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">提交/清空<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);" id="finished">提交当前问卷</a></li>
+						<li role="presentation" class="divider"></li>
+						<li><a href="javascript:void(0);" id="reset">重置当前问卷</a></li>
+						<li role="presentation" class="divider"></li>
+						<li><a href="javascript:void(0);" id="clear">新建问卷</a></li>
+					</ul>
+				</div>
 				<div class="global">
 					<label for="cost" class="label">
 						<span class="text">预计酬劳: </span> 

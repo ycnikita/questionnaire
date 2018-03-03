@@ -40,14 +40,9 @@
 			// 如果没有id信息，不进行消息获取
 			var _this = this;
 			var url = document.location.href;
-			var id = this.getQuery('id');
-			var tempData = window.localStorage.getItem('data');
-			if(!id && tempData) {
-				data = JSON.parse(tempData);
-				_this.updataView();
-				return ;
-			}
+			var id = $('#finished').attr('data-id');
 			if (!id) {
+				_this.resetState();
 				return ;
 			}
 			// 将信息提交
@@ -71,11 +66,11 @@
 			// 监听耗时和预计费用
 			$cost.on('change', function(e){
 				data.cost = $(e.target).val();
-				window.localStorage.setItem('data', JSON.stringify(data));
+				_this.saveState();
 			});
 			$time.on('change', function(e){
 				data.time = $(e.target).val();
-				window.localStorage.setItem('data', JSON.stringify(data));
+				_this.saveState();
 			});
 			// 点击某个题目的监听
 			$iphone.on('click', '.pre-wrapper', function(e) {
@@ -171,11 +166,11 @@
 			// 点击完成按钮
 			$topicFinish.on('click', function(e) {
 				if(!editingType) return;
-				window.localStorage.removeItem('data');
+				this.clearState();
 				_this.initState();
 			});
 
-			// 点击完成编辑按钮
+			// 点击提交问卷
 			$finished.on('click', function(e){
 				var cost = $cost.val();
 				var time = $time.val();
@@ -213,6 +208,31 @@
 					}
 				});
 			});
+			// 点击清空问卷按钮
+			$('#clear').on('click', function(e){
+				// 清除缓存
+				_this.clearState();
+				// 重置数字状态
+				curOrder = 0;
+				curTopicOrder = 0;
+				// 重置data
+				data = {
+					title: '空标题',
+					des: '空描述',
+					topics: []
+				};
+				// 清空预览区
+				_this.updataView();
+				// 重置提交问卷按钮的data-id
+				$('#finished').attr("data-id", '');
+				// 重置编辑区状态
+				_this.initState();
+			});
+			// 重置当前问卷
+			$('#reset').on('click', function(e){
+				_this.resetState();
+				window.location.reload(true);
+			});
 		},
 		// 首先将编辑的相关按钮，输入等置为不可编辑状态
 		initState: function() {
@@ -232,7 +252,6 @@
 				data.title = text;
 				$iphone.find(`.pre-${editingType}`).html(text);
 			} else {
-				data.prograph.push({index: curOrder, content: text});
 				$iphone.find(`.pre-wrapper[data-order="${choosenOrder}"]`).find('.title-content').html(text);
 			}
 		},
@@ -360,6 +379,7 @@
 		},
 		// 根据数据的更改，刷新视图
 		updataView: function() {
+			var _this = this;
 			// 便利data，更改dom结构
 			var vDom = '';
 			var topicIndex = 0;
@@ -369,17 +389,17 @@
 			data.topics && data.topics.map(function(item, index){
 				var type = item.type;
 				if(type === 'prograph') {
-					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="prograph"><p class="title-content">${item.content}</p></div>`
+					vDom += `<div class="pre-wrapper" data-order="${index}" data-type="prograph"><p class="title-content">${item.content}</p></div>`
 				} else if (type === 'radio' || type === 'checkbox') {
 					++topicIndex;
-					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="${type}"><div class="order">${topicIndex+1}. </div><p class="title-content">${item.content}</p>
+					vDom += `<div class="pre-wrapper" data-order="${index}" data-type="${type}"><div class="order">${topicIndex}. </div><p class="title-content">${item.content}</p>
 					<ul>`;
 					for (let i = 0; i < item.items.length; i++) {
-						vDom += `<li><label for="${topicIndex}_${i}"><input type="${type}" name="${topicIndex}" id="${topicIndex}_0" value="0"><i class="${type === 'radio'? 'circle' : 'rect' }"></i><span>${item.items[i].content}</span></label></li>`;
+						vDom += `<li><label for="${topicIndex}_${i}"><input type="${type}" name="${topicIndex}" id="${topicIndex}_${i}" value="0"><i class="${type === 'radio'? 'circle' : 'rect' }"></i><span>${item.items[i].content}</span></label></li>`;
 					}
 					vDom += '</ul></div>';
 				} else if (type === 'text') {
-					vDom += `<div class="pre-wrapper pre-choosen" data-order="${index}" data-type="${type}"><div class="order">${topicIndex+1}. </div><p class="title-content">${item.content}</p>
+					vDom += `<div class="pre-wrapper" data-order="${index}" data-type="${type}"><div class="order">${topicIndex+1}. </div><p class="title-content">${item.content}</p>
 					<textarea row="5" name="${topicIndex}" class="topic-text" id="${topicIndex}"></textarea>
 				</div>`;
 				}
@@ -387,6 +407,10 @@
 			});
 			$iphone.find('.pre-wrapper').remove();
 			$iphone.append(vDom);
+			// 更新index
+			var len = data.topics.length;
+			curTopicOrder = topicIndex;
+			curOrder = len;
 			// 如果data有id，把id插入，并且更新耗时和花销
 			if(data._id) {
 				$('#finished').attr('data-id', data._id);
@@ -398,6 +422,7 @@
 		changeData: function(optionType, type, value, indexTopic, indexItem) {
 			let curTopicIndex = indexTopic;
 			let index = indexItem === null ? indexTopic: indexItem;
+			if (!data.topics) data.topics = [];
 			if (type === 'item' && data.topics[curTopicIndex].items === undefined) {
 				data.topics[curTopicIndex].items = [];
 			}
@@ -430,7 +455,7 @@
 					arr.push({content: value});
 				}
 			}
-			window.localStorage.setItem('data', JSON.stringify(data));
+			this.saveState();
 		},
 		// 获取crfToken
 		getToken: function() {
@@ -454,6 +479,23 @@
 				return params.filter(item => item.indexOf(`${name}=`) !== -1)[0].split('=')[1];
 			}
 			return undefined;
+		},
+		// 保存当前状态
+		saveState: function() {
+			// 记录数据
+			window.localStorage.setItem('data', JSON.stringify(data));
+		},
+		// 恢复保存的状态
+		resetState: function() {
+			if(!window.localStorage.getItem('data')) {
+				return;
+			}
+			data = JSON.parse(window.localStorage.getItem('data'));
+			this.updataView();
+		},
+		// 清除当前的状态
+		clearState: function() {
+			window.localStorage.removeItem('data');
 		}
 	};
 

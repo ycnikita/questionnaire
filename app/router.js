@@ -3,6 +3,7 @@ module.exports = (app) => {
 	// 后台管理功能页面
 	router.get('/', controller.index.list);
 	router.get('/control/list', controller.index.list);
+	router.post('/control/delete', controller.index.delete);
 	router.get('/control/edit', controller.index.edit);
 	router.get('/control/table', controller.index.table);
 	router.get('/control/analysis', controller.index.analysis);

@@ -41,7 +41,15 @@
 			var _this = this;
 			var url = document.location.href;
 			var id = this.getQuery('id');
-			if(!id) return;
+			var tempData = window.localStorage.getItem('data');
+			if(!id && tempData) {
+				data = JSON.parse(tempData);
+				_this.updataView();
+				return ;
+			}
+			if (!id) {
+				return ;
+			}
 			// 将信息提交
 			var crfToken = _this.getToken('csrfToken');
 			$.ajax({
@@ -60,6 +68,15 @@
 		initEvents: function() {
 			// 根据选择的类型，添加不同的内容到手机展示区域，并且指定部分输入和输
 			var _this = this;
+			// 监听耗时和预计费用
+			$cost.on('change', function(e){
+				data.cost = $(e.target).val();
+				window.localStorage.setItem('data', JSON.stringify(data));
+			});
+			$time.on('change', function(e){
+				data.time = $(e.target).val();
+				window.localStorage.setItem('data', JSON.stringify(data));
+			});
 			// 点击某个题目的监听
 			$iphone.on('click', '.pre-wrapper', function(e) {
 				var type = $(this).attr('data-type');
@@ -77,7 +94,7 @@
 				if(type === 'delete') {
 					_this.changeNumber('delete');
 				}
-				_this.changeData(type, 'title', '', choosenOrder);
+				_this.changeData(type, 'title', null, choosenOrder, null);
 				// 更新视图
 				_this.updataView();
 			})
@@ -107,7 +124,7 @@
 					}
 					$iphone.find(`.pre-wrapper[data-order="${choosenOrder}"]`).find('.title-content').html(text);
 				}
-				_this.changeData('changeValue', 'title', text, choosenOrder);
+				_this.changeData('changeValue', 'title', text, choosenOrder, null);
 			});
 
 			// 点击添加选项按钮
@@ -117,7 +134,7 @@
 					return;
 				}
 				_this.addItem(`选项${curItemOrder + 2}`, editingType, curItemOrder + 1);
-				_this.changeData('add', 'item', `选项${curItemOrder + 2}`, curItemOrder + 1);
+				_this.changeData('add', 'item', `选项${curItemOrder + 2}`, choosenOrder, curItemOrder + 1);
 			});
 
 			// 选项输入框内容变化
@@ -129,7 +146,7 @@
 				var optionIndex = $(e.target).attr('data-order');
 				var order = $('.pre-choosen').attr('data-order');
 				var text = $(e.target).val();
-				_this.changeData('changeValue', 'item', text, optionIndex);
+				_this.changeData('changeValue', 'item', text, order, optionIndex);
 				$('.pre-choosen').find(`input[id="${order}_${optionIndex}"]`).nextAll('span').text(text);
 			});
 
@@ -140,7 +157,7 @@
 					return;
 				}
 				var index = $(e.target).parent().find('input').attr('data-order');
-				_this.changeData('moveUp', 'item', undefined, index);
+				_this.changeData('moveUp', 'item', undefined, choosenOrder, index);
 			});
 			$('.options-wrap').on('click', '.to-down', function(e) {
 				if (choosenOrder === undefined || editingType === undefined) {
@@ -148,12 +165,13 @@
 					return;
 				}
 				var index = $(e.target).parent().find('input').attr('data-order');
-				_this.changeData('moveDown', 'item', undefined, index);
+				_this.changeData('moveDown', 'item', undefined, choosenOrder, index);
 			});
 
 			// 点击完成按钮
 			$topicFinish.on('click', function(e) {
 				if(!editingType) return;
+				window.localStorage.removeItem('data');
 				_this.initState();
 			});
 
@@ -162,20 +180,17 @@
 				var cost = $cost.val();
 				var time = $time.val();
 				var id = $(e.target).attr('data-id');
-				if(cost === '') {
-					alert('酬劳不能为空');
+				if(cost === '' && /^\d+{,6}$/.test(cost)) {
+					alert('酬劳不能为空且为不大于六位数的数字');
 					return;
 				}
-				if(time === '') {
-					alert('请注明耗费时间');
+				if(time === '' && /^\d+{,6}$/.test(time)) {
+					alert('耗费时间不能为空且为不大于六位数的数字');
 					return;
 				}
-				data.cost = cost;
-				data.time = time;
 				if(id) {
 					data.id = id;
 				}
-				console.log(data);
 				var f = window.confirm("确定提交当前问卷？");
 				if(!f) return;
 				// 将信息提交
@@ -230,6 +245,9 @@
 			$topicInput.attr('disabled', false);
 			$topicFinish.removeClass('disabled');
 			$('.options-wrap').find('input').attr('disabled', true);
+			$('input.option').val(function(index){
+				return `选项${index + 1}`;
+			});
 			// 开始添加
 			if(type === 'radio' || type === 'checkbox') {
 				// 可以添加选项
@@ -252,7 +270,7 @@
 			if(type === 'prograph') {
 				$iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="prograph"><p class="title-content">一段描述段落</p></div>`);
 				$topicInput.val('一段描述段落');
-				this.changeData('add', 'title', '一段描述段落', curOrder);
+				this.changeData('add', 'title', '一段描述段落', curOrder, null);
 			} else if (type === 'radio' || type === 'checkbox') {
 				curItemOrder = 1;
 				$iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="${type}"><div class="order">${curTopicOrder+1}. </div><p class="title-content">标题</p>
@@ -262,15 +280,15 @@
 				</ul>
 				</div>`);
 				$topicInput.val('标题');
-				this.changeData('add', 'title', '标题', curOrder);
-				this.changeData('add', 'item', '选项1', 0);
-				this.changeData('add', 'item', '选项2', 1);
+				this.changeData('add', 'title', '标题', curOrder, null);
+				this.changeData('add', 'item', '选项1', curOrder, 0);
+				this.changeData('add', 'item', '选项2', curOrder, 1);
 			} else if (type === 'text') {
 				$iphone.append(`<div class="pre-wrapper pre-choosen" data-order="${curOrder}" data-type="${type}"><div class="order">${curTopicOrder+1}. </div><p class="title-content">标题</p>
 					<textarea row="5" name="${curTopicOrder}" class="topic-text" id="${curTopicOrder}"></textarea>
 				</div>`);
 				$topicInput.val('题目描述');
-				this.changeData('add', 'title', '题目描述', curOrder);
+				this.changeData('add', 'title', '题目描述', curOrder, null);
 			}
 			this.changeNumber('add', curOrder, type);
 		},
@@ -371,16 +389,15 @@
 			$iphone.append(vDom);
 			// 如果data有id，把id插入，并且更新耗时和花销
 			if(data._id) {
-				console.log(data);
 				$('#finished').attr('data-id', data._id);
-				$('#cost').val(data.cost);
-				$('#time').val(data.time);
 			}
+			$('#cost').val(data.cost);
+			$('#time').val(data.time);
 		},
 		// 每次更新数据(optionType: moveUp | moveDown | delete | changeValue | add, type: title | item)
-		changeData: function(optionType, type, value, index) {
-			let curTopicIndex = choosenOrder;
-			if(choosenOrder === undefined) curTopicIndex = curOrder;
+		changeData: function(optionType, type, value, indexTopic, indexItem) {
+			let curTopicIndex = indexTopic;
+			let index = indexItem === null ? indexTopic: indexItem;
 			if (type === 'item' && data.topics[curTopicIndex].items === undefined) {
 				data.topics[curTopicIndex].items = [];
 			}
@@ -413,6 +430,7 @@
 					arr.push({content: value});
 				}
 			}
+			window.localStorage.setItem('data', JSON.stringify(data));
 		},
 		// 获取crfToken
 		getToken: function() {

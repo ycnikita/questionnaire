@@ -20,11 +20,14 @@
 				</div>
 				<div class="card-action">
 					<a href="/control/edit?id={{item._id}}">编辑</a>
-					<a href="/control/analysis?id={{item._id}}">查看分析</a>
+					<a href="javascript:void(0);" class="delete" data-title="{{item.title}}" data-id="{{item._id}}">删除</a>
 				</div>
 			</div>
 		</div>
 		{% endif %}
 	{% endfor %}
 </div>
+{% endblock %}
+{% block scripts %}
+	<script src="/public/js/custom-list.js"></script>
 {% endblock %}

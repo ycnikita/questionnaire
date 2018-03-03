@@ -29,9 +29,18 @@ class Control extends Service {
 	}
 	// 获取某个id下的调查问卷
 	async getOnePage(id) {
-		try {
+		try {	
 			const result = await this.app.mongo.find('qs', {query: {"_id": ObjectId(id)}});
 			return result[0];
+		} catch (e) {
+			console.log(e);
+		}
+	}
+	// 删除某个id对应的调查问卷
+	async delete(params) {
+		try {	
+			const result = await this.app.mongo.deleteMany('qs', {filter: {"_id": ObjectId(params.id)}});
+			return result;
 		} catch (e) {
 			console.log(e);
 		}

@@ -44,7 +44,6 @@
 						<li><a href="javascript:void(0);" data-type="radio">单项选择</a></li>
 						<li><a href="javascript:void(0);" data-type="checkbox">多选</a></li>
 						<li><a href="javascript:void(0);" data-type="text">填空</a></li>
-						<li><a href="javascript:void(0);" data-type="score">评分组件</a></li>
 					</ul>
 				</div>
 				<div class="dropdown" style="margin-left:20px;">

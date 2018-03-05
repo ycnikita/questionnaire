@@ -8,11 +8,11 @@ class API extends Controller {
 
 	}
 	/**
-	 * 请求某个分类下面的某一页的问卷列表
+	 * 请求某个分类下面的某一页的问卷列表，排序
 	 * @param {string} type 某个分类的名字
 	 */
 	async getPaperList (type) {
-
+		
 	}
 	/**
 	 * 请求某个问卷的所有题目

@@ -40,7 +40,7 @@
 			// 如果没有id信息，不进行消息获取
 			var _this = this;
 			var url = document.location.href;
-			var id = $('#finished').attr('data-id');
+			var id = this.getQuery('id');
 			if (!id) {
 				_this.resetState();
 				return ;
@@ -54,6 +54,7 @@
 					if(+result.code === 200) {
 						// 获取题目成功，替换内容
 						data = result.data;
+						console.log(data);
 						_this.updataView();
 					}
 				}

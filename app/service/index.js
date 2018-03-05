@@ -45,6 +45,16 @@ class Control extends Service {
 			console.log(e);
 		}
 	}
+	// 获取布包含用户x的所有问卷列表
+	async conditionList (name) {
+		const data = await this.app.module.find('qs', {
+			query: {
+				"usernames": {
+					$not: new RegExp(`^.*${name}\\|.*$`, 'g')
+				}
+			}
+		});
+	}
 }
 
 module.exports = Control;

@@ -11,16 +11,23 @@ class Control extends Service {
 		try {
 			let result = {};
 			const id = data.id || data._id;
+			const initData = {
+				name: '颜生',
+				hot: Math.floor(Math.random()*10)
+			};
+			Object.assign(initData, data, {
+				date: JSON.stringify(new Date()).split('T')[0].replace('"', '')
+			});
 			if(id) {
-				delete data._id;
+				delete initData._id;
 				result = await this.app.mongo.updateMany('qs', {
 					filter: {"_id": ObjectId(id)}, 
 					update: {
-						"$set": data
+						"$set": initData
 					}
 				});
 			} else {
-				result = await this.app.mongo.insertOne('qs', {doc: data});
+				result = await this.app.mongo.insertOne('qs', {doc: initData});
 			}
 			return result;
 		} catch (e) {

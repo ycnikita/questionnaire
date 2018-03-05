@@ -54,7 +54,6 @@
 					if(+result.code === 200) {
 						// 获取题目成功，替换内容
 						data = result.data;
-						console.log(data);
 						_this.updataView();
 					}
 				}
@@ -400,7 +399,8 @@
 					}
 					vDom += '</ul></div>';
 				} else if (type === 'text') {
-					vDom += `<div class="pre-wrapper" data-order="${index}" data-type="${type}"><div class="order">${topicIndex+1}. </div><p class="title-content">${item.content}</p>
+					++topicIndex;
+					vDom += `<div class="pre-wrapper" data-order="${index}" data-type="${type}"><div class="order">${topicIndex}. </div><p class="title-content">${item.content}</p>
 					<textarea row="5" name="${topicIndex}" class="topic-text" id="${topicIndex}"></textarea>
 				</div>`;
 				}

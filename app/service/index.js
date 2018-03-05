@@ -3,7 +3,13 @@ const ObjectId = require('mongodb').ObjectId;
 class Control extends Service {
 	// 读取某个用户生成的所有list（title， des， id）
 	async list(page = 1) {
-		const data = await this.app.mongo.find('qs', {});
+		const data = await this.app.mongo.find('qs', {
+			projection: {
+				_id: 1,
+				title: 1,
+				des: 1
+			}
+		});
 		return data;
 	}
 	// 存放用户上传的问卷
@@ -37,7 +43,15 @@ class Control extends Service {
 	// 获取某个id下的调查问卷
 	async getOnePage(id) {
 		try {	
-			const result = await this.app.mongo.find('qs', {query: {"_id": ObjectId(id)}});
+			const result = await this.app.mongo.find('qs', {
+				query: {"_id": ObjectId(id)},
+				projection: {
+					_id: 1,
+					title: 1,
+					des: 1,
+					topics: 1
+				}
+			});
 			return result[0];
 		} catch (e) {
 			console.log(e);
@@ -56,6 +70,34 @@ class Control extends Service {
 	async conditionList (name) {
 		const data = await this.app.mongo.find('qs', {});
 		return data;
+	}
+	// api存储答案
+	async updataAnswer(id, answer) {
+		// 更新答案
+		const result = this.app.mongo.updateMany('qs',{
+			filter: {"_id": ObjectId(id)}, 
+			update: {
+				"$push": answer
+			}
+		});
+		// 增加热度
+		this.app.mongo.updateMany('qs',{
+			filter: {"_id": ObjectId(id)}, 
+			update: {
+				"$set": { "hot": $ + 1 }
+			}
+		});
+		return result;
+	}
+	// 获取某个问卷的答案列表
+	async getAnswers (id) {
+		const answers = await this.app.mongo.find('qs', {
+			query: {"_id": ObjectId(id)},
+			projection: {
+				answers: 1
+			}
+		});
+		return answers;
 	}
 }
 

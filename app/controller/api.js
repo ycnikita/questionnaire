@@ -25,12 +25,13 @@ class API extends Controller {
 	}
 	/**
 	 * 上传答案
-	 * @param {string} id 	问卷的id
-	 * @param {string} number 问卷的题号
-	 * @param {string} answer 当前选择的答案
+	 * @param {string} id 	 问卷的id
+	 * @param {array} answer 问卷的答案
 	 */
-	async uploadAnswer (id, number, answer) {
-
+	async uploadAnswer () {
+		const id = this.ctx.request.body.id;
+		const answer = this.ctx.request.body.answer;
+		const result = await this.ctx.service.index.updataAnswer(id, answer);
 	}
 	/**
 	 * 用户当前已完成问卷

@@ -54,6 +54,12 @@ class index extends Controller {
 		const data = {};
 		await this.ctx.render('a.html', data);
 	}
+	// 获取某个id的答案
+	async getAnswers() {
+		const id = this.ctx.query.id;
+		const data = this.ctx.service.index.getAnswers(id);
+		this.ctx.body = {code: 200, data: data};
+	}
 }
 
 module.exports = index;

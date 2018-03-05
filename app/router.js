@@ -23,8 +23,8 @@ module.exports = (app) => {
 	router.get('/api/uploadAnswer', controller.api.uploadAnswer);
 	router.get('/api/doneList', controller.api.getDoneList);
 	router.get('/api/doingList', controller.api.getDoingList);
-	router.get('/api/curScore	', controller.api.curScore);
+	router.get('/api/curScore', controller.api.curScore);
 
 	// 测试页面
-	router.get('/test', controller.index.test);
+	router.get('/control/test', controller.index.getAnswers);
 };

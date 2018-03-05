@@ -47,13 +47,8 @@ class Control extends Service {
 	}
 	// 获取布包含用户x的所有问卷列表
 	async conditionList (name) {
-		const data = await this.app.module.find('qs', {
-			query: {
-				"usernames": {
-					$not: new RegExp(`^.*${name}\\|.*$`, 'g')
-				}
-			}
-		});
+		const data = await this.app.mongo.find('qs', {});
+		return data;
 	}
 }
 

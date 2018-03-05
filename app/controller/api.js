@@ -5,14 +5,14 @@ const Controller = require('egg').Controller;
 class API extends Controller {
 	// 请求所有的问卷分类
 	async getTypes () {
-
 	}
 	/**
-	 * 请求某个分类下面的某一页的问卷列表，排序
-	 * @param {string} type 某个分类的名字
+	 * 请求某一页的问卷列表，排序
+	 * @param {string} 
 	 */
-	async getPaperList (type) {
-		
+	async getPaperList () {
+		const data = await this.ctx.service.index.conditionList();
+		this.ctx.body = {code: 200, data};
 	}
 	/**
 	 * 请求某个问卷的所有题目

@@ -32,6 +32,7 @@ class API extends Controller {
 		const id = this.ctx.request.body.id;
 		const answer = this.ctx.request.body.answer;
 		const result = await this.ctx.service.index.updataAnswer(id, answer);
+		this.ctx.body = {code: 200};
 	}
 	/**
 	 * 用户当前已完成问卷

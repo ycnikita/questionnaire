@@ -285,16 +285,7 @@
 
 	<!-- Metis Menu Js -->
 	<script src="/public/js/jquery.metisMenu.js"></script>
-	<!-- Morris Chart Js -->
-	<script src="/public/js/raphael-2.1.0.min.js"></script>
-	<script src="/public/js/morris.js"></script>
-
-
-	<script src="/public/js/easypiechart.js"></script>
-	<script src="/public/js/easypiechart-data.js"></script>
-
-	<script src="/public/js/jquery.chart.js"></script>
-
+	
 	<!-- Custom Js -->
 	<script src="/public/js/custom-scripts.js"></script>
 	<script src="/public/js/custom-base.js"></script>

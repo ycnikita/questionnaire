@@ -77,9 +77,10 @@ class Control extends Service {
 		const result = this.app.mongo.updateMany('qs',{
 			filter: {"_id": ObjectId(id)}, 
 			update: {
-				"$push": answer
+				"$push": {"answers": answer}	
 			}
 		});
+		console.log(answer);
 		// 增加热度
 		// this.app.mongo.updateMany('qs',{
 		// 	filter: {"_id": ObjectId(id)}, 

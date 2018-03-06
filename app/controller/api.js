@@ -29,8 +29,8 @@ class API extends Controller {
 	 * @param {array} answer 问卷的答案
 	 */
 	async uploadAnswer () {
-		const id = this.ctx.request.body.id;
-		const answer = this.ctx.request.body.answer;
+		const id = this.ctx.query.id;
+		const answer = this.ctx.query.answer;
 		const result = await this.ctx.service.index.updataAnswer(id, answer);
 		this.ctx.body = {code: 200};
 	}

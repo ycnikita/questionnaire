@@ -102,9 +102,11 @@ class Control extends Service {
 		return data;
 	}
 	// 获取布包含用户x的所有问卷列表 （小程序）
-	async conditionList (userInfo) {
-		const userObj = JSON.parse(userInfo);
-		const data = await this.app.mongo.find('qs', {});
+	async conditionList () {
+		// const userObj = JSON.parse(userInfo);
+		const data = await this.app.mongo.find('qs', {sort: {
+			"hot": -1
+		}});
 		return data;
 	}
 	// api存储答案（小程序）

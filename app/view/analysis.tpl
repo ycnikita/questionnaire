@@ -31,7 +31,7 @@
 						<a href="javascript:void(0);" style="width: 40%; display: inline-block;">
 							<div >
 								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ item.percent }}"
+									<div class="progress-bar progress-bar-{{['success', 'info', 'warning']|random}}" role="progressbar" aria-valuenow="{{ item.percent }}"
 										aria-valuemin="0" aria-valuemax="100" style="width: {{item.percent}}%">
 										<span class="sr-only">{{item.percent}}% Complete (success)</span>
 									</div>

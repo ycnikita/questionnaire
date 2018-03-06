@@ -33,10 +33,13 @@ class index extends Controller {
 		} else {
 			const data = await this.ctx.service.index.analysisList();
 			// 对问卷返回值做修饰
-			const reData = data.map(item => {
-				item.percent = Math.floor(item.hot / item.num) || 50;
-				if(item.percent > 100) item.percent = 100;
+			let reData = data.map(item => {
+				item.percent = Math.floor(item.hot / item.num);
+				if(isNaN(item.percent)) item.percent = 0;
 				return item;
+			});
+			reData = reData.sort((a, b) => {
+				return a.percent - b.percent;
 			});
 			await this.ctx.render('analysis.tpl', { data: reData });
 		}

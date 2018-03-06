@@ -95,7 +95,7 @@ class Control extends Service {
 				num: 1,
 				hot: 1,
 				des: 1,
-				answer: 1,
+				answers: 1,
 				topics: 1
 			}
 		});
@@ -111,12 +111,44 @@ class Control extends Service {
 	}
 	// api存储答案（小程序）
 	async updataAnswer(id, answer) {
-		// 更新答案
-		const result = this.app.mongo.updateMany('qs',{
+		const jsonAnswer = JSON.parse(answer).answer;
+		// 更新答案，此处更改topics较为复制，先将其查找出来，再回写
+		const data = await this.app.mongo.find('qs', {
+			query: {"_id": ObjectId(id)},
+			projection: {
+				topics: 1
+			}
+		});
+		const updataTopics = data.topics.map((item, index) => {
+			if(item.type === 'radio') {
+				const hot = item.items[jsonAnswer[index]].hot;
+				if(!hot) {
+					item.items[jsonAnswer[index]].hot = 1;
+				} else {
+					item.items[jsonAnswer[index]].hot += 1;
+				}
+			}
+			if(item.type === 'checkbox') {
+				const choosenArr = jsonAnswer[index];
+				choosenArr.map(choosen => {
+					const hot = item.items[choosen].hot;
+					if(!hot) {
+						item.items[choosen].hot = 1;
+					} else {
+						item.items[choosen].hot += 1;
+					}
+				});
+			}
+			return item;
+		});
+		const result = await this.app.mongo.updateMany('qs',{
 			filter: {"_id": ObjectId(id)}, 
 			update: {
 				"$push": {"answers": JSON.parse(answer)},
-				"$inc": { "hot": 1 }
+				"$inc": { "hot": 1 },
+				"$set": {
+					"topics": updataTopics
+				}
 			}
 		});
 		return result;

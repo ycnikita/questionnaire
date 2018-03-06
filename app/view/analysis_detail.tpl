@@ -10,66 +10,52 @@
 {% endblock %}
 {% block content %}
 {# 所有问卷的完成度列表 #}
-<p class="des">{{data.des}}</p>
+<p class="des" style="font-size: 18px;">{{data.des}}</p>
 {% for item in data.topics %}
-	
-{% endfor %}
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-7">
-		<div class="cirStats">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="card-panel text-center">
-						<h4>Profit</h4>
-						<div class="easypiechart" id="easypiechart-blue" data-percent="82">
-							<span class="percent">82%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="card-panel text-center">
-						<h4>No. of Visits</h4>
-						<div class="easypiechart" id="easypiechart-red" data-percent="46">
-							<span class="percent">46%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="card-panel text-center">
-						<h4>Customers</h4>
-						<div class="easypiechart" id="easypiechart-teal" data-percent="84">
-							<span class="percent">84%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="card-panel text-center">
-						<h4>Sales</h4>
-						<div class="easypiechart" id="easypiechart-orange" data-percent="55">
-							<span class="percent">55%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="row">
+		{{ loop.index }}. {{item.content}}
 	</div>
-	<!--/.row-->
-	<div class="col-xs-12 col-sm-12 col-md-5">
+	{% if data.answers %}
 		<div class="row">
-			<div class="col-xs-12">
-				<div class="card">
-					<div class="card-image donutpad">
-						<div id="morris-donut-chart"></div>
-					</div>
-					<div class="card-action">
-						<b>Donut Chart Example</b>
+			{% if item.type == 'radio' %}
+				<div class="col-xs-12 col-sm-12 col-md-6">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="card">
+								<div class="card-image donutpad">
+									<div data-topics="{{item.items|dump}}" class="mychart" id="radio_{{loop.index0}}_0"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			{% elif item.type == 'checkbox' %}
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="cirStats">
+						<div class="row">
+							{% set wrapIndex = loop.index0 %}
+							{% for check in item.items %}
+							<div class="col-xs-12 col-sm-3 col-md-3"> 
+								<div class="card-panel text-center" id="check_{{wrapIndex}}_{{loop.index0}}">
+									<h4>{{check.content}}</h4>
+									<div class="easypiechart" id="easypiechart-{{['blue', 'red', 'teal', 'orange', 'brown', 'coral', 'cornsilk', 'DarkCyan'][loop.index0]}}" data-percent="{{check.percent}}"><span class="percent">{{check.percent}}%</span>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			{% elif item.type == 'text' %}
+
+			{% else %}
+
+			{% endif %}
 		</div>
-	</div>
-	<!--/.row-->
-</div>
+	{% else %}
+		<div class="row">当前还没有人作答哟～</div>
+	{% endif %}
+{% endfor %}
 
 {% endblock %}
 {% block scripts %}
@@ -84,4 +70,10 @@
 	<script src="/public/js/jquery.chart.js"></script>
 	{# custom #}
 	<script src="/public/js/custom-analysis.js"></script>
+	<script>
+		window.answers = [];
+		{% for answer in data.answers %}
+			window.answers.push(JSON.parse('{{answer|dump}}'.replace(/&quot;/g, '"')));
+		{% endfor %}
+	</script>
 {% endblock %}

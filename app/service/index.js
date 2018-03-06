@@ -119,17 +119,17 @@ class Control extends Service {
 				topics: 1
 			}
 		});
-		const updataTopics = data.topics.map((item, index) => {
+		const updataTopics = data[0].topics.map((item, index) => {
 			if(item.type === 'radio') {
-				const hot = item.items[jsonAnswer[index]].hot;
+				const hot = item.items[jsonAnswer[index + 1]].hot;
 				if(!hot) {
-					item.items[jsonAnswer[index]].hot = 1;
+					item.items[jsonAnswer[index + 1]].hot = 1;
 				} else {
-					item.items[jsonAnswer[index]].hot += 1;
+					item.items[jsonAnswer[index + 1]].hot += 1;
 				}
 			}
 			if(item.type === 'checkbox') {
-				const choosenArr = jsonAnswer[index];
+				const choosenArr = jsonAnswer[index + 1];
 				choosenArr.map(choosen => {
 					const hot = item.items[choosen].hot;
 					if(!hot) {

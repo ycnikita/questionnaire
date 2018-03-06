@@ -7,7 +7,6 @@
 {% endblock %}
 {% block location %}
 {{ data.title }}
-{{ data|dump}}
 {% endblock %}
 {% block content %}
 {# 所有问卷的完成度列表 #}

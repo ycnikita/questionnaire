@@ -1,7 +1,7 @@
 const Service = require('egg').Service;
 const ObjectId = require('mongodb').ObjectId;
 class Control extends Service {
-	// 读取某个用户生成的所有list（title， des， id）
+	// 读取某个用户生成的所有list（title， des， id）（管理后台）
 	async list(page = 1) {
 		const data = await this.app.mongo.find('qs', {
 			projection: {
@@ -12,7 +12,7 @@ class Control extends Service {
 		});
 		return data;
 	}
-	// 存放用户上传的问卷
+	// 存放用户上传的问卷(管理后台)
 	async save(data) {
 		try {
 			let result = {};
@@ -40,7 +40,7 @@ class Control extends Service {
 			console.log(e);
 		}
 	}
-	// 获取某个id下的调查问卷
+	// 获取某个id下的调查问卷（管理后台）
 	async getOnePage(id) {
 		try {	
 			const result = await this.app.mongo.find('qs', {
@@ -57,7 +57,7 @@ class Control extends Service {
 			console.log(e);
 		}
 	}
-	// 删除某个id对应的调查问卷
+	// 删除某个id对应的调查问卷 （管理后台）
 	async delete(params) {
 		try {	
 			const result = await this.app.mongo.deleteMany('qs', {filter: {"_id": ObjectId(params.id)}});
@@ -66,31 +66,25 @@ class Control extends Service {
 			console.log(e);
 		}
 	}
-	// 获取布包含用户x的所有问卷列表
-	async conditionList (name) {
+	// 获取布包含用户x的所有问卷列表 （小程序）
+	async conditionList (userInfo) {
+		const userObj = JSON.parse(userInfo);
 		const data = await this.app.mongo.find('qs', {});
 		return data;
 	}
-	// api存储答案
+	// api存储答案（小程序）
 	async updataAnswer(id, answer) {
 		// 更新答案
 		const result = this.app.mongo.updateMany('qs',{
 			filter: {"_id": ObjectId(id)}, 
 			update: {
-				"$push": {"answers": answer},
+				"$push": {"answers": JSON.parse(answer)},
 				"$inc": { "hot": 1 }
 			}
 		});
-		// 增加热度
-		// this.app.mongo.updateMany('qs',{
-		// 	filter: {"_id": ObjectId(id)}, 
-		// 	update: {
-		// 		"$inc": { "hot": 1 }
-		// 	}
-		// });
 		return result;
 	}
-	// 获取某个问卷的答案列表
+	// 获取某个问卷的答案列表 （小程序）
 	async getAnswers (id) {
 		const answers = await this.app.mongo.find('qs', {
 			query: {"_id": ObjectId(id)},

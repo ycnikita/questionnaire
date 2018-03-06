@@ -13,10 +13,10 @@
 	{% for item in list %}
 		{% if item.title !== undefined %}
 		<div class="col-md-4 col-sm-4">
-			<div class="card teal">
-				<div class="card-content white-text">
+			<div class="card {{['teal white-text', 'blue-grey darken-1 white-text', '']|random}}">
+				<div class="card-content">
 					<span class="card-title" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title={{item.title}}>{{ item.title }}</span>
-					<p>{{ item.des }}</p>
+					<p style="height: 50px; over-flow:hidden; color: inherite">{{ item.des }}</p>
 				</div>
 				<div class="card-action">
 					<a href="/control/edit?id={{item._id}}">编辑</a>

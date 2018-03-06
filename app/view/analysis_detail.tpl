@@ -10,7 +10,11 @@
 {% endblock %}
 {% block content %}
 {# 所有问卷的完成度列表 #}
-{# <div class="row">
+<p class="des">{{data.des}}</p>
+{% for item in data.topics %}
+	
+{% endfor %}
+<div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-7">
 		<div class="cirStats">
 			<div class="row">
@@ -65,7 +69,7 @@
 		</div>
 	</div>
 	<!--/.row-->
-</div> #}
+</div>
 
 {% endblock %}
 {% block scripts %}

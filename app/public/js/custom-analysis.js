@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    if($('#morris-area-chart').length > 0) {
+$(document).ready(function () {
+    if ($('#morris-area-chart').length > 0) {
         Morris.Area({
             element: 'morris-area-chart',
             data: [{
@@ -65,6 +65,25 @@ $(document).ready(function() {
         });
     }
 
+    Morris.Donut({
+        element: 'morris-donut-chart',
+        data: [{
+            label: "Profits",
+            value: 12
+        }, {
+            label: "Users",
+            value: 30
+        }, {
+            label: "Total Sales",
+            value: 20
+        }],
+        colors: [
+            '#A6A6A6', '#414e63',
+            '#e96562'
+        ],
+        resize: true
+    });
+
     $('.donut-chart').cssCharts({
         type: "donut"
     }).trigger('show-donut-chart');
@@ -76,8 +95,8 @@ $(document).ready(function() {
         type: "pie"
     });
 
-    $('li.collection-item').on('click', function(e){
+    $('li.collection-item').on('click', function (e) {
         var id = $(this).attr('data-id');
-        window.location.href = '/control/analysis?id='+id;
+        window.location.href = '/control/analysis?id=' + id;
     })
 });

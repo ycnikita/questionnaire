@@ -25,8 +25,21 @@ class index extends Controller {
 	}
 	// 问卷分析页面
 	async analysis() {
-		const data = {};
-		await this.ctx.render('analysis.tpl', data);
+		const id = this.ctx.query.id;
+		if(id) {
+			// 查询某一个id下面的内容，返回渲染列表
+			const data = await this.ctx.service.index.analysisOne(id);;
+			await this.ctx.render('analysis_detail.tpl', { data: data[0] });
+		} else {
+			const data = await this.ctx.service.index.analysisList();
+			// 对问卷返回值做修饰
+			const reData = data.map(item => {
+				item.percent = Math.floor(item.hot / item.num) || 50;
+				if(item.percent > 100) item.percent = 100;
+				return item;
+			});
+			await this.ctx.render('analysis.tpl', { data: reData });
+		}
 	}
 	// 问卷资费页面
 	async expenses() {

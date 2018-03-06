@@ -6,48 +6,10 @@
 问卷分析
 {% endblock %}
 {% block location %}
-问卷分析
+{{ data.title }}
 {% endblock %}
 {% block content %}
 {# 所有问卷的完成度列表 #}
-<!-- /. ROW  -->
-<div class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="card">
-			<div class="card-action">
-				<b>问卷完成度列表</b>
-			</div>
-			<div class="card-image">
-				<ul class="collection">
-					{% for item in data %}
-					<li data-id="{{item._id}}" class="collection-item avatar" style="display:flex;justify-content: space-between;">
-						<div style="width: 50%;">
-							<i class="material-icons circle {{['green', '', 'blue', 'orange']|random}}">{{ ['track_changes', 'grade', 'folder']|random }}</i>
-							<span class="title">{{item.title}}</span>
-							<p title="{{item.des}}">
-								{{item.des}}
-							</p>
-						</div>
-						<a href="javascript:void(0);" style="width: 40%; display: inline-block;">
-							<div >
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ item.percent }}"
-										aria-valuemin="0" aria-valuemax="100" style="width: {{item.percent}}%">
-										<span class="sr-only">{{item.percent}}% Complete (success)</span>
-									</div>
-								</div>
-								<p>
-									<span class="pull-right text-muted">{{item.percent}}% Complete</span>
-								</p>
-							</div>
-						</a>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
 {# <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-7">
 		<div class="cirStats">
@@ -104,18 +66,6 @@
 	</div>
 	<!--/.row-->
 </div> #}
-<div class="row">
-	<div class="col-xs-12">
-		<div class="card">
-			<div class="card-image">
-				<div id="morris-area-chart"></div>
-			</div>
-			<div class="card-action">
-				<b>问卷填写活跃时段</b>
-			</div>
-		</div>
-	</div>
-</div>
 
 {% endblock %}
 {% block scripts %}

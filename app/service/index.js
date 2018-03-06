@@ -49,6 +49,9 @@ class Control extends Service {
 					_id: 1,
 					title: 1,
 					des: 1,
+					cost: 1,
+					time: 1,
+					num: 1,
 					topics: 1
 				}
 			});
@@ -65,6 +68,38 @@ class Control extends Service {
 		} catch (e) {
 			console.log(e);
 		}
+	}
+	// 分析列表，查询返回 {id, hot, num, title, des}（管理后台）
+	async analysisList() {
+		const data = await this.app.mongo.find('qs', {
+			projection: {
+				_id: 1,
+				title: 1,
+				des: 1,
+				num: 1,
+				hot: 1,
+				des: 1
+			}
+		});
+		return data;
+	}
+	// 分析列表，查询返回 {id, hot, num, title, des}（管理后台）
+	async analysisOne(id) {
+		const data = await this.app.mongo.find('qs', {
+			query: {
+				"_id": ObjectId(id)
+			},
+			projection: {
+				title: 1,
+				des: 1,
+				num: 1,
+				hot: 1,
+				des: 1,
+				answer: 1,
+				topics: 1
+			}
+		});
+		return data;
 	}
 	// 获取布包含用户x的所有问卷列表 （小程序）
 	async conditionList (userInfo) {

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>广发问卷</title>
+	<title>广布问卷</title>
 
 	<link href="/public/css/font-icons.css" rel="stylesheet">
 	<link rel="stylesheet" href="/public/css/materialize.min.css" media="screen,projection"

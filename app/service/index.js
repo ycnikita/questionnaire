@@ -77,16 +77,17 @@ class Control extends Service {
 		const result = this.app.mongo.updateMany('qs',{
 			filter: {"_id": ObjectId(id)}, 
 			update: {
-				"$push": {"answers": answer}	
-			}
-		});
-		// 增加热度
-		this.app.mongo.updateMany('qs',{
-			filter: {"_id": ObjectId(id)}, 
-			update: {
+				"$push": {"answers": answer},
 				"$inc": { "hot": 1 }
 			}
 		});
+		// 增加热度
+		// this.app.mongo.updateMany('qs',{
+		// 	filter: {"_id": ObjectId(id)}, 
+		// 	update: {
+		// 		"$inc": { "hot": 1 }
+		// 	}
+		// });
 		return result;
 	}
 	// 获取某个问卷的答案列表

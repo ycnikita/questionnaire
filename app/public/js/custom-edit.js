@@ -2,6 +2,7 @@
 	// 将公用元素检出
 	var $finished = $('#finished'),
 		$cost = $('input[name="cost"]'),
+		$num = $('input[name="num"]'),
 		$time = $('input[name="time"]');
 	// 预览
 	var $iphone = $('#pre_container');
@@ -70,6 +71,10 @@
 			});
 			$time.on('change', function(e){
 				data.time = $(e.target).val();
+				_this.saveState();
+			});
+			$num.on('change', function(e){
+				data.num = $(e.target).val();
 				_this.saveState();
 			});
 			// 点击某个题目的监听
@@ -198,6 +203,7 @@
 						if(+result.code === 200) {
 							// 提交题目成功，跳转到已发布
 							alert('提交题目成功！');
+							_this.clearState();
 							window.location.href = '/control/list';
 						} else {
 							alert(result.des);
@@ -418,6 +424,7 @@
 			}
 			$('#cost').val(data.cost);
 			$('#time').val(data.time);
+			$('#num').val(data.num);
 		},
 		// 每次更新数据(optionType: moveUp | moveDown | delete | changeValue | add, type: title | item)
 		changeData: function(optionType, type, value, indexTopic, indexItem) {

@@ -18,6 +18,7 @@
 	display: flex;
 	align-items: center;
 	color: #555;
+	width: 140px;
 }
 
 /* 预览的内容 */

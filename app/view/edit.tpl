@@ -20,10 +20,17 @@
 					<label for="cost" class="label">
 						<span class="text">预计酬劳: </span> 
 						<input type="text" class="cost" id="cost" name="cost">
+						<span class="text">元</span> 
 					</label>
 					<label for="time" class="label">
 						<span class="text">预计用时: </span> 
 						<input type="text" class="time" id="time" name="time">
+						<span class="text">分钟</span> 
+					</label>
+					<label for="num" class="label">
+						<span class="text">问卷总数: </span> 
+						<input type="text" class="num" id="num" name="num">
+						<span class="text">份</span> 
 					</label>
 				</div>
 			</div>

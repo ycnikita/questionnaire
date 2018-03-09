@@ -38,7 +38,7 @@
 							<div class="col-xs-12 col-sm-3 col-md-3"> 
 								<div class="card-panel text-center" id="check_{{wrapIndex}}_{{loop.index0}}">
 									<h4>{{check.content}}</h4>
-									<div class="easypiechart" id="easypiechart-{{['blue', 'red', 'teal', 'orange', 'brown', 'coral', 'cornsilk', 'DarkCyan'][loop.index0]}}" data-percent="{{(check.hot / data.hot)*100|round}}"><span class="percent">{{(check.hot|default(0) / data.hot)*100|round}}%</span>
+									<div class="easypiechart" id="easypiechart-{{['blue', 'red', 'teal', 'orange', 'brown', 'coral', 'cornsilk', 'DarkCyan'][loop.index0]}}" data-percent="{{(check.hot / data.hot)*100|round}}"><span class="percent">{{((check.hot|default(0) / data.hot)*100)|round}}%</span>
 									</div>
 								</div>
 							</div>
